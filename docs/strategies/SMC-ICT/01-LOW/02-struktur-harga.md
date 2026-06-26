@@ -165,7 +165,7 @@ LH terbentuk → kemudian buat LL → STRUKTUR BERUBAH
 
 ---
 
-> **Latihan**: Buka EURUSD H4. Tandai 10 Swing High dan 10 Swing Low terbaru. Tentukan trend yang sedang terjadi. Tandai EQH/EQL jika ada.
+> **Latihan**: Buka XAUUSD H4. Tandai 10 Swing High dan 10 Swing Low terbaru. Tentukan trend yang sedang terjadi. Tandai EQH/EQL jika ada.
 
 ---
 

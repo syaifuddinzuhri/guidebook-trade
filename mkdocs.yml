@@ -61,8 +61,11 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Fondasi:
-    - Candlestick: foundations/Candlestick/README.md
-    - Market Structure: foundations/Market-Structure/README.md
+    - Candlestick:
+      - Overview: foundations/Candlestick/README.md
+      - "01. Anatomi Candlestick": foundations/Candlestick/01-anatomi-candlestick.md
+    - Market Structure:
+      - Overview: foundations/Market-Structure/README.md
   - Strategi:
     - SMC + ICT:
       - Overview: strategies/SMC-ICT/README.md

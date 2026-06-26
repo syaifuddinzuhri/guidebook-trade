@@ -283,7 +283,7 @@ Sebelum lanjut ke modul berikutnya, pastikan kamu bisa menjawab:
 ## 9. Latihan Praktis
 
 ### Latihan 1: Identifikasi Level di Chart Historis
-1. Buka TradingView, pilih pair EURUSD
+1. Buka TradingView, pilih pair XAUUSD
 2. Ubah timeframe ke Daily (D1)
 3. Lihat 6 bulan ke belakang
 4. Tandai **3 level support** dan **3 level resistance** yang paling jelas

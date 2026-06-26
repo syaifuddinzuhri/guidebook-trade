@@ -355,7 +355,7 @@ SL placement untuk BUY di zone:
 ## 9. Latihan Praktis
 
 ### Latihan 1: Buat 3 Zone
-Buka EURUSD H4. Identifikasi dan gambar 3 zone (1 support, 2 resistance atau sebaliknya) menggunakan metode Wick-to-Body.
+Buka XAUUSD H4. Identifikasi dan gambar 3 zone (1 support, 2 resistance atau sebaliknya) menggunakan metode Wick-to-Body.
 
 ### Latihan 2: Tandai Kualitas Entry
 Untuk setiap zone yang kamu buat:

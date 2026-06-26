@@ -386,7 +386,7 @@ Rekomendasi:
 ## Latihan Praktis
 
 ### Latihan 1: Temukan Semua Jenis SnR
-Buka EURUSD Daily chart:
+Buka XAUUSD Daily chart:
 1. Gambar 3 horizontal support/resistance
 2. Gambar trendline jika ada trend yang jelas
 3. Tambahkan MA 50 dan MA 200

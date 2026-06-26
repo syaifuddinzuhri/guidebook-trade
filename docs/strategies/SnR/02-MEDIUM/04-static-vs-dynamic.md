@@ -337,7 +337,7 @@ Buka USDJPY H4:
 Di chart yang sama, identifikasi semua area di mana static dan dynamic SnR berdekatan (dalam 10-20 pip). Catat minimal 2 zona konfluensi.
 
 ### Latihan 3: Backtest 10 Setup
-Dengan chart EURUSD D1 (6 bulan lalu), cari 10 momen di mana terjadi konfluensi static + dynamic. Catat:
+Dengan chart XAUUSD D1 (6 bulan lalu), cari 10 momen di mana terjadi konfluensi static + dynamic. Catat:
 - Apakah harga bereaksi di zona konfluensi?
 - Seberapa kuat reaksinya?
 - Apakah trade ini profitable?

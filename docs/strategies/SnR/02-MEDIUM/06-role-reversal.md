@@ -422,7 +422,7 @@ Harga
 ## 9. Latihan Praktis
 
 ### Latihan 1: Identifikasi SR Flip Historis
-Buka EURUSD D1 chart (1 tahun ke belakang):
+Buka XAUUSD D1 chart (1 tahun ke belakang):
 1. Identifikasi 5 breakout yang signifikan
 2. Cek apakah masing-masing diikuti retest (SR Flip)
 3. Catat: apakah retest berhasil (harga bereaksi) atau failed (harga terus)?

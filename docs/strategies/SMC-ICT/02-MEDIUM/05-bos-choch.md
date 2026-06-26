@@ -399,7 +399,7 @@ Keterangan candle:
 
 ---
 
-> **Latihan**: Buka EURUSD D1. Mulai dari 3 bulan yang lalu. Tandai semua BOS dan CHOCH. Hitung: berapa BOS yang valid dan berapa CHOCH yang valid? Apakah arah setelah CHOCH benar-benar berbalik?
+> **Latihan**: Buka XAUUSD D1. Mulai dari 3 bulan yang lalu. Tandai semua BOS dan CHOCH. Hitung: berapa BOS yang valid dan berapa CHOCH yang valid? Apakah arah setelah CHOCH benar-benar berbalik?
 
 ---
 

@@ -1252,3 +1252,432 @@ if __name__ == '__main__':
     print()
     print(f"✅ Semua chart tersimpan di: {OUTPUT_DIR}/")
     print(f"   Total: 22 chart")
+
+
+# ══════════════════════════════════════════════════════════════
+# FOUNDATION — ADDITIONAL CHARTS (XAUUSD)
+# ══════════════════════════════════════════════════════════════
+
+def chart_candle_types():
+    """Jenis-jenis candle dengan label"""
+    fig, ax = setup_dark_chart(figsize=(16, 7), title="Jenis-Jenis Candlestick — XAUUSD\nDari Marubozu sampai Doji")
+    ax.set_xlim(0, 17)
+    ax.set_ylim(0, 11)
+    ax.axis('off')
+
+    types = [
+        # (x, o_rel, h_rel, l_rel, c_rel, name, color, desc)
+        (1,   0.1, 0.9, 0.1, 0.9, 'Bullish\nMarubozu', GREEN,  'Momentum\nbullish penuh'),
+        (2.5, 0.9, 0.9, 0.1, 0.1, 'Bearish\nMarubozu', RED,    'Momentum\nbearish penuh'),
+        (4,   0.3, 0.92,0.05,0.88,'Hammer',             GREEN,  'Rejection\nbawah kuat'),
+        (5.5, 0.7, 0.95,0.12,0.15,'Shooting\nStar',     RED,    'Rejection\natas kuat'),
+        (7,   0.2, 0.88,0.08,0.82,'Inverted\nHammer',   GREEN,  'Potensi\nbullish rev.'),
+        (8.5, 0.8, 0.92,0.18,0.22,'Hanging\nMan',       RED,    'Potensi\nbearish rev.'),
+        (10,  0.5, 0.55,0.45,0.50,'Doji',               GRAY,   'Ketidak-\npastian'),
+        (11.5,0.5, 0.92,0.08,0.50,'Long-Legged\nDoji',  GRAY,   'Konflik\nextreme'),
+        (13,  0.5, 0.52,0.08,0.50,'Dragonfly\nDoji',    GREEN,  'Reversal\nbullish'),
+        (14.5,0.5, 0.92,0.48,0.50,'Gravestone\nDoji',   RED,    'Reversal\nbearish'),
+        (16,  0.4, 0.75,0.25,0.6, 'Spinning\nTop',      GRAY,   'Ragu, arah\ntidak jelas'),
+    ]
+
+    for xc, o, h, l, c, name, col, desc in types:
+        w = 0.35
+        body_bot = min(o, c); body_h = abs(c - o) or 0.04
+        ax.add_patch(plt.Rectangle((xc - w/2, body_bot*9+0.5), w, body_h*9,
+                                   color=col, zorder=3))
+        ax.plot([xc, xc], [l*9+0.5, body_bot*9+0.5], color=col, lw=1.5)
+        ax.plot([xc, xc], [(body_bot+body_h)*9+0.5, h*9+0.5], color=col, lw=1.5)
+        ax.text(xc, -0.15, name, color=col, fontsize=7, ha='center',
+                fontweight='bold', va='top')
+        ax.text(xc, -0.75, desc, color=GRAY, fontsize=6, ha='center', va='top')
+
+    save(fig, 'candle_types')
+
+
+def chart_two_candle_patterns():
+    """Pola dua candle"""
+    fig, ax = setup_dark_chart(figsize=(16, 7), title="Pola Dua Candle Penting — XAUUSD\nKonfirmasi di Support/Resistance/OB")
+    ax.set_xlim(0, 16)
+    ax.set_ylim(0, 11)
+    ax.axis('off')
+
+    patterns = [
+        ('Bullish\nEngulfing', GREEN, [(0.7,0.75,0.6,0.65),(0.55,0.95,0.5,0.92)],
+         'Candle bullish\nmencakup seluruh\ncandle bearish'),
+        ('Bearish\nEngulfing', RED,   [(0.3,0.4,0.25,0.35),(0.4,0.45,0.08,0.12)],
+         'Candle bearish\nmencakup seluruh\ncandle bullish'),
+        ('Bullish\nHarami',   GREEN, [(0.8,0.85,0.2,0.25),(0.35,0.65,0.3,0.6)],
+         'Candle kecil\nbullish dalam\nbody bearish besar'),
+        ('Bearish\nHarami',   RED,   [(0.2,0.8,0.15,0.75),(0.35,0.65,0.4,0.45)],
+         'Candle kecil\nbearish dalam\nbody bullish besar'),
+        ('Tweezer\nBottom',   GREEN, [(0.65,0.7,0.1,0.62),(0.1,0.7,0.1,0.65)],
+         'Low sama persis\n→ support kuat\n= potensi naik'),
+        ('Tweezer\nTop',      RED,   [(0.3,0.92,0.28,0.88),(0.88,0.92,0.3,0.32)],
+         'High sama persis\n→ resistance kuat\n= potensi turun'),
+    ]
+
+    xstart = 1
+    for name, col, cands, desc in patterns:
+        for ci, (o, h, l, c) in enumerate(cands):
+            x = xstart + ci * 0.9
+            cc = GREEN if c >= o else RED
+            body_bot = min(o,c); body_h = abs(c-o) or 0.04
+            ax.add_patch(plt.Rectangle((x-0.35, body_bot*8+1), 0.7, body_h*8,
+                                       color=cc, zorder=3))
+            ax.plot([x,x],[l*8+1, body_bot*8+1], color=cc, lw=1.5)
+            ax.plot([x,x],[(body_bot+body_h)*8+1, h*8+1], color=cc, lw=1.5)
+        mid = xstart + 0.45
+        ax.text(mid, 0.3, name, color=col, fontsize=7.5,
+                ha='center', fontweight='bold', va='top')
+        ax.text(mid, -0.35, desc, color=GRAY, fontsize=6,
+                ha='center', va='top')
+        # Divider
+        ax.axvline(xstart-0.4, color=GRID_COLOR, lw=0.5, alpha=0.5)
+        xstart += 2.4
+
+    save(fig, 'two_candle_patterns')
+
+
+def chart_three_candle_patterns():
+    """Morning Star, Evening Star, Three Soldiers/Crows"""
+    fig, ax = setup_dark_chart(figsize=(16, 7), title="Pola Tiga Candle — XAUUSD\nSignal Pembalikan Kuat")
+    ax.set_xlim(0, 16)
+    ax.set_ylim(0, 11)
+    ax.axis('off')
+
+    patterns = [
+        ('Morning Star\n(Bullish Reversal)', GREEN,
+         [(0.8,0.85,0.2,0.25),(0.28,0.36,0.22,0.32),(0.2,0.85,0.18,0.8)],
+         'Candle bearish\nbesar → Doji/kecil\n→ Bullish besar'),
+        ('Evening Star\n(Bearish Reversal)', RED,
+         [(0.2,0.82,0.18,0.78),(0.74,0.82,0.68,0.76),(0.8,0.82,0.18,0.22)],
+         'Candle bullish\nbesar → Doji/kecil\n→ Bearish besar'),
+        ('Three White\nSoldiers', GREEN,
+         [(0.3,0.65,0.28,0.62),(0.55,0.75,0.53,0.72),(0.7,0.92,0.68,0.90)],
+         '3 candle bullish\nberturut, close\nmakin tinggi'),
+        ('Three Black\nCrows', RED,
+         [(0.72,0.74,0.38,0.40),(0.42,0.44,0.22,0.24),(0.26,0.28,0.08,0.10)],
+         '3 candle bearish\nberturut, close\nmakin rendah'),
+    ]
+
+    xstart = 0.8
+    for name, col, cands, desc in patterns:
+        for ci, (o, h, l, c) in enumerate(cands):
+            x = xstart + ci * 1.05
+            cc = GREEN if c >= o else RED
+            body_bot = min(o,c); body_h = abs(c-o) or 0.03
+            ax.add_patch(plt.Rectangle((x-0.4, body_bot*8.5+0.5), 0.8, body_h*8.5,
+                                       color=cc, zorder=3))
+            ax.plot([x,x],[l*8.5+0.5, body_bot*8.5+0.5], color=cc, lw=1.5)
+            ax.plot([x,x],[(body_bot+body_h)*8.5+0.5, h*8.5+0.5], color=cc, lw=1.5)
+        mid = xstart + 1.05
+        ax.text(mid, 0.2, name, color=col, fontsize=7.5,
+                ha='center', fontweight='bold', va='top')
+        ax.text(mid, -0.45, desc, color=GRAY, fontsize=6,
+                ha='center', va='top')
+        ax.axvline(xstart-0.6, color=GRID_COLOR, lw=0.5, alpha=0.5)
+        xstart += 3.7
+
+    save(fig, 'three_candle_patterns')
+
+
+def chart_candle_in_context():
+    """Candle yang sama, konteks berbeda — artinya beda"""
+    candles = [
+        (2040,2048,2025,2043),(2043,2050,2038,2046),(2046,2052,2032,2034),
+        # Hammer di support (bullish)
+        (2034,2036,2018,2035),
+        (2035,2048,2033,2046),(2046,2055,2043,2052),
+        # Shooting star di resistance (bearish)
+        (2052,2072,2050,2053),
+        (2053,2056,2038,2040),(2040,2042,2028,2030),
+    ]
+    fig, ax = setup_dark_chart(title="Konteks Menentukan Makna Candle — XAUUSD H1\nCandle yang Sama Bisa Berbeda Arti")
+    draw_candles(ax, candles)
+    n = len(candles)
+    ax.set_xlim(-1, n+3)
+    prices = [p for c in candles for p in c]
+    ax.set_ylim(min(prices)-8, max(prices)+14)
+
+    # Support zone
+    zone_box(ax, 0.2, 0.55, 2018, 2028, GREEN, 0.15)
+    ax.text(1.5, 2013, 'SUPPORT ZONE', color=GREEN, fontsize=8,
+            ha='center', fontweight='bold')
+    ax.annotate('Hammer di Support\n→ BULLISH SIGNAL ✓\n(Harga ditolak dari bawah)', xy=(3.5, 2018),
+                xytext=(5, 2012),
+                arrowprops=dict(arrowstyle='->', color=GREEN, lw=1.8),
+                color=GREEN, fontsize=8.5, fontweight='bold',
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='#0d3d00', edgecolor=GREEN))
+
+    # Resistance zone
+    zone_box(ax, 0.6, 0.95, 2060, 2074, RED, 0.15)
+    ax.text(7.5, 2077, 'RESISTANCE ZONE', color=RED, fontsize=8,
+            ha='center', fontweight='bold')
+    ax.annotate('Shooting Star di Resistance\n→ BEARISH SIGNAL ✓\n(Harga ditolak dari atas)', xy=(6.5, 2072),
+                xytext=(8, 2078),
+                arrowprops=dict(arrowstyle='->', color=RED, lw=1.8),
+                color=RED, fontsize=8.5, fontweight='bold',
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='#3d0000', edgecolor=RED))
+
+    ax.text(n/2, max(prices)+10, '⚠ Candle tanpa konteks zona = sinyal palsu!',
+            color=YELLOW, fontsize=9, fontweight='bold', ha='center',
+            bbox=dict(boxstyle='round,pad=0.4', facecolor='#2d2000', edgecolor=YELLOW))
+
+    ax.set_ylabel('Price (USD)', color=TEXT_COLOR, fontsize=10)
+    ax.tick_params(axis='x', which='both', bottom=False, labelbottom=False)
+    save(fig, 'candle_in_context')
+
+
+def chart_wick_analysis():
+    """Analisis wick — apa yang diceritakan"""
+    candles = [
+        (2030,2060,2028,2032), # Long upper wick = rejection atas
+        (2040,2042,2012,2038), # Long lower wick = rejection bawah
+        (2038,2055,2010,2052), # Kedua wick panjang = konflik
+        (2030,2032,2028,2031), # Doji = keseimbangan
+        (2025,2060,2023,2058), # Bullish strong, sedikit upper wick
+        (2058,2060,2025,2027), # Bearish strong, sedikit lower wick
+    ]
+    fig, ax = setup_dark_chart(title="Analisis Wick — XAUUSD\nApa yang Diceritakan Setiap Wick")
+    draw_candles(ax, candles)
+    n = len(candles)
+    ax.set_xlim(-1, n+4)
+    prices = [p for c in candles for p in c]
+    ax.set_ylim(min(prices)-8, max(prices)+20)
+
+    annotations = [
+        (0, candles[0][1]+2, 'Upper wick panjang\n→ Seller menolak harga tinggi\n→ Bearish pressure', RED, 1, 0),
+        (1, candles[1][2]-3, 'Lower wick panjang\n→ Buyer menolak harga rendah\n→ Bullish pressure', GREEN, -1, 1),
+        (2, candles[2][1]+2, 'Kedua wick panjang\n→ Konflik keras\n→ Tidak ada pemenang', ORANGE, 1, 2),
+        (3, (candles[3][0]+candles[3][3])/2, 'Doji (body mini)\n→ Open ≈ Close\n→ Keseimbangan penuh', GRAY, 1, 3),
+        (4, candles[4][1]+2, 'Upper wick kecil\n→ Bullish kuat\n(sedikit profit taking)', GREEN, 1, 4),
+        (5, candles[5][2]-3, 'Lower wick kecil\n→ Bearish kuat\n(sedikit buying)', RED, -1, 5),
+    ]
+    offsets = [(n+0.5,2068),(n+0.5,2008),(n+1,2075),(n+0.5,2030),(n+0.5,2068),(n+0.5,2010)]
+    for i, (xi, yi, txt, col, direction, idx) in enumerate(annotations):
+        tx, ty = offsets[i]
+        ax.annotate(txt, xy=(xi, yi), xytext=(tx, ty),
+                    arrowprops=dict(arrowstyle='->', color=col, lw=1.3),
+                    color=col, fontsize=7.5, fontweight='bold',
+                    bbox=dict(boxstyle='round,pad=0.25', facecolor=DARK_BG, edgecolor=col, alpha=0.9))
+
+    ax.set_ylabel('Price (USD)', color=TEXT_COLOR, fontsize=10)
+    ax.tick_params(axis='x', which='both', bottom=False, labelbottom=False)
+    save(fig, 'wick_analysis')
+
+
+def chart_impulse_corrective():
+    """Impulse vs Corrective wave dalam uptrend — XAUUSD"""
+    candles = [
+        # Impulse 1
+        (1980,1990,1978,1988),(1988,2000,1986,1998),(1998,2012,1996,2010),
+        (2010,2018,2008,2016),(2016,2025,2014,2022),
+        # Corrective 1
+        (2022,2024,2010,2012),(2012,2015,2008,2010),(2010,2013,2006,2011),
+        # Impulse 2
+        (2011,2022,2009,2020),(2020,2032,2018,2030),(2030,2042,2028,2040),
+        (2040,2052,2038,2050),(2050,2058,2048,2056),
+        # Corrective 2
+        (2056,2058,2038,2040),(2040,2044,2036,2038),(2038,2040,2034,2039),
+        # Impulse 3
+        (2039,2052,2037,2050),(2050,2062,2048,2060),(2060,2072,2058,2070),
+    ]
+    fig, ax = setup_dark_chart(title="Impulse vs Corrective Wave — XAUUSD H4\nStruktur Gelombang dalam Uptrend")
+    draw_candles(ax, candles)
+    n = len(candles)
+    ax.set_xlim(-1, n+3)
+    prices = [p for c in candles for p in c]
+    ax.set_ylim(min(prices)-8, max(prices)+14)
+
+    # Impulse zones
+    for x0, x1, label in [(0,4,'Impulse 1'),(8,12,'Impulse 2'),(16,18,'Impulse 3')]:
+        zone_box(ax, x0/n, x1/n, min(prices)-5, max(prices)+10, GREEN, 0.07)
+        ax.text((x0+x1)/2, max(prices)+8, label, color=GREEN,
+                fontsize=8, ha='center', fontweight='bold')
+
+    # Corrective zones
+    for x0, x1, label in [(5,7,'Correction 1'),(13,15,'Correction 2')]:
+        zone_box(ax, x0/n, x1/n, min(prices)-5, max(prices)+10, RED, 0.1)
+        ax.text((x0+x1)/2, max(prices)+8, label, color=RED,
+                fontsize=8, ha='center', fontweight='bold')
+
+    # HL labels
+    ax.text(5.5, candles[7][2]-3, 'HL', color=GREEN, fontsize=10, fontweight='bold', ha='center')
+    ax.text(13.5, candles[15][2]-3, 'HL', color=GREEN, fontsize=10, fontweight='bold', ha='center')
+
+    ax.annotate('Koreksi normal:\n38-61% dari impulse\n→ Cari entry di sini!', xy=(6, 2010),
+                xytext=(9, 1998),
+                arrowprops=dict(arrowstyle='->', color=YELLOW, lw=1.8),
+                color=YELLOW, fontsize=8.5, fontweight='bold',
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='#2d2000', edgecolor=YELLOW))
+
+    ax.set_ylabel('XAUUSD Price (USD)', color=TEXT_COLOR, fontsize=10)
+    ax.tick_params(axis='x', which='both', bottom=False, labelbottom=False)
+    save(fig, 'impulse_corrective')
+
+
+def chart_premium_discount():
+    """Premium vs Discount zone — XAUUSD"""
+    candles = [
+        # Swing Low
+        (1990,1998,1986,1994),
+        # Rally ke Swing High
+        (1994,2005,1992,2003),(2003,2015,2001,2012),(2012,2022,2010,2020),
+        (2020,2030,2018,2028),(2028,2038,2026,2035),(2035,2042,2033,2040),
+        # Swing High, lalu pullback
+        (2040,2045,2038,2043),
+        (2043,2046,2028,2030),(2030,2033,2025,2031),(2031,2034,2022,2032),
+    ]
+    fig, ax = setup_dark_chart(title="Premium vs Discount Zone — XAUUSD H4\nOTE (Optimal Trade Entry) di Discount Zone")
+    draw_candles(ax, candles)
+    n = len(candles)
+    ax.set_xlim(-1, n+3)
+    prices = [p for c in candles for p in c]
+    ax.set_ylim(min(prices)-6, max(prices)+10)
+
+    swing_low = 1986
+    swing_high = 2045
+    mid = (swing_low + swing_high) / 2  # 50% = 2015.5
+    ote_top = swing_low + (swing_high - swing_low) * 0.62  # ~2033
+    ote_bot = swing_low + (swing_high - swing_low) * 0.38  # ~2021
+
+    # Premium zone (atas 50%)
+    ax.axhspan(mid, swing_high, alpha=0.08, color=RED)
+    ax.text(n+0.5, (mid+swing_high)/2, 'PREMIUM\nZone\n(Sell area)', color=RED,
+            fontsize=8, va='center', fontweight='bold')
+
+    # Discount zone (bawah 50%)
+    ax.axhspan(swing_low, mid, alpha=0.08, color=GREEN)
+    ax.text(n+0.5, (swing_low+mid)/2, 'DISCOUNT\nZone\n(Buy area)', color=GREEN,
+            fontsize=8, va='center', fontweight='bold')
+
+    # 50% line
+    ax.axhline(mid, color=YELLOW, lw=1.5, ls='-.', alpha=0.8)
+    ax.text(-0.5, mid, f'50% Equilibrium\n{mid:.0f}', color=YELLOW,
+            fontsize=8, va='center', ha='right', fontweight='bold')
+
+    # OTE zone
+    zone_box(ax, 0.7, 1, ote_bot, ote_top, PURPLE, 0.3)
+    ax.text(n+0.5, (ote_bot+ote_top)/2, f'OTE Zone\n62–79%\n{ote_bot:.0f}–{ote_top:.0f}',
+            color=PURPLE, fontsize=8, va='center', fontweight='bold')
+
+    # Swing points
+    ax.axhline(swing_high, color=RED, lw=1, ls=':', alpha=0.6)
+    ax.axhline(swing_low, color=GREEN, lw=1, ls=':', alpha=0.6)
+    ax.text(-0.5, swing_high, f'Swing High {swing_high}', color=RED, fontsize=7.5, va='center', ha='right')
+    ax.text(-0.5, swing_low, f'Swing Low {swing_low}', color=GREEN, fontsize=7.5, va='center', ha='right')
+
+    ax.annotate('Harga pullback ke\nOTE (Discount Zone)\n→ Entry BUY!', xy=(9.5, 2025),
+                xytext=(10.5, 2012),
+                arrowprops=dict(arrowstyle='->', color=PURPLE, lw=1.8),
+                color=PURPLE, fontsize=8.5, fontweight='bold',
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='#1a0030', edgecolor=PURPLE))
+
+    ax.set_ylabel('XAUUSD Price (USD)', color=TEXT_COLOR, fontsize=10)
+    ax.tick_params(axis='x', which='both', bottom=False, labelbottom=False)
+    save(fig, 'premium_discount')
+
+
+def chart_key_levels_xauusd():
+    """Key levels di XAUUSD"""
+    candles = [
+        (1990,2002,1988,1998),(1998,2010,1996,2008),(2008,2018,2006,2015),
+        (2015,2020,2005,2007),(2007,2012,2004,2010),(2010,2022,2008,2020),
+        (2020,2032,2018,2030),(2030,2038,2025,2027),(2027,2032,2022,2030),
+        (2030,2048,2028,2045),(2045,2052,2040,2043),(2043,2048,2038,2046),
+        (2046,2055,2043,2048),
+    ]
+    fig, ax = setup_dark_chart(title="Key Levels — XAUUSD H4\nLevel yang Wajib Ditandai setiap Minggu")
+    draw_candles(ax, candles)
+    n = len(candles)
+    ax.set_xlim(-1, n+3)
+    prices = [p for c in candles for p in c]
+    ax.set_ylim(min(prices)-10, max(prices)+14)
+
+    levels = [
+        (2000, PURPLE, 'Round Number 2000 (Psikologis)', '--'),
+        (2050, PURPLE, 'Round Number 2050 (Psikologis)', '--'),
+        (2020, BLUE,   'Previous Week Low (PWL)', '-.'),
+        (2048, ORANGE, 'Previous Week High (PWH)', '-.'),
+        (2007, RED,    'Equal Low (EQL) — SSL', ':'),
+        (2045, GREEN,  'Swing High terbaru', ':'),
+    ]
+
+    for price, col, label, ls in levels:
+        ax.axhline(price, color=col, lw=1.5, ls=ls, alpha=0.8, zorder=4)
+        ax.text(n+0.3, price, label, color=col, fontsize=7.5, va='center', fontweight='bold')
+
+    ax.text(1, max(prices)+10,
+            'Tandai level ini setiap awal minggu sebelum trading!',
+            color=YELLOW, fontsize=9, fontweight='bold',
+            bbox=dict(boxstyle='round,pad=0.4', facecolor='#2d2000', edgecolor=YELLOW))
+
+    ax.set_ylabel('XAUUSD Price (USD)', color=TEXT_COLOR, fontsize=10)
+    ax.tick_params(axis='x', which='both', bottom=False, labelbottom=False)
+    save(fig, 'key_levels_xauusd')
+
+
+def chart_mtf_structure():
+    """HTF structure menampung LTF pullback — XAUUSD"""
+    fig, axes = plt.subplots(1, 2, figsize=(16, 7), facecolor=DARK_BG)
+    fig.suptitle('HTF Structure Menampung LTF Pullback — XAUUSD\nD1 Uptrend → H4 Koreksi → H4 Entry Zone',
+                 color=TEXT_COLOR, fontsize=12, fontweight='bold')
+
+    # D1 view - uptrend besar
+    d1_candles = [
+        (1950,1968,1948,1962),(1962,1978,1960,1975),(1975,1990,1973,1988),
+        (1988,1998,1980,1985),(1985,1992,1978,1990),(1990,2005,1988,2002),
+        (2002,2018,2000,2015),(2015,2028,2012,2025),(2025,2040,2022,2038),
+    ]
+    # H4 view - pullback dalam D1 uptrend
+    h4_candles = [
+        (2038,2045,2036,2042),(2042,2048,2038,2040),(2040,2042,2030,2032),
+        (2032,2035,2025,2027),(2027,2030,2022,2028),(2028,2038,2026,2036),
+        (2036,2048,2034,2046),(2046,2055,2043,2052),
+    ]
+
+    for ax, candles, title, note in [
+        (axes[0], d1_candles, 'D1 — Uptrend Besar (Bias: BULLISH)',
+         'HH + HL terus terbentuk\n→ Bias D1: BUY ONLY'),
+        (axes[1], h4_candles, 'H4 — Pullback dalam Uptrend D1\n(Cari Entry BUY di sini)',
+         'H4 koreksi ke OB/FVG\n→ Entry BUY sesuai bias D1'),
+    ]:
+        ax.set_facecolor(DARK_BG)
+        ax.grid(True, color=GRID_COLOR, linewidth=0.5, alpha=0.5)
+        ax.tick_params(colors=TEXT_COLOR)
+        for spine in ax.spines.values():
+            spine.set_edgecolor(GRID_COLOR)
+        ax.set_title(title, color=TEXT_COLOR, fontsize=10, fontweight='bold', pad=8)
+        draw_candles(ax, candles)
+        n = len(candles)
+        ax.set_xlim(-1, n+2)
+        prices = [p for c in candles for p in c]
+        ax.set_ylim(min(prices)-8, max(prices)+14)
+        ax.tick_params(axis='x', which='both', bottom=False, labelbottom=False)
+        ax.text(0.5, 0.06, note, transform=ax.transAxes,
+                color=YELLOW, fontsize=8.5, fontweight='bold', ha='center',
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='#2d2000', edgecolor=YELLOW))
+        ax.set_ylabel('XAUUSD (USD)', color=TEXT_COLOR, fontsize=9)
+
+    # H4: annotate OB zone
+    ob_top, ob_bot = 2030, 2022
+    zone_box(axes[1], 2.5/8, 6/8, ob_bot, ob_top, GREEN, 0.25)
+    axes[1].text(3.5, (ob_top+ob_bot)/2, 'OB Bullish H4\n(Entry Zone)', color=GREEN,
+                 fontsize=8, ha='center', va='center', fontweight='bold')
+
+    plt.tight_layout()
+    save(fig, 'mtf_structure')
+
+
+if __name__ == '__main__':
+    print("Generating FOUNDATION charts...")
+    chart_candle_types()
+    chart_two_candle_patterns()
+    chart_three_candle_patterns()
+    chart_candle_in_context()
+    chart_wick_analysis()
+    chart_impulse_corrective()
+    chart_premium_discount()
+    chart_key_levels_xauusd()
+    chart_mtf_structure()
+    print(f"✅ 9 foundation charts saved to {OUTPUT_DIR}/")

@@ -424,7 +424,7 @@ Harga
 
 ---
 
-> **Latihan**: Di EURUSD H1, cari 5 Bullish OB dan 5 Bearish OB. Tandai dengan kotak. Cek: berapa yang sudah dimitigasi? Berapa yang masih fresh? Apakah harga bereaksi saat kembali ke OB?
+> **Latihan**: Di XAUUSD H1, cari 5 Bullish OB dan 5 Bearish OB. Tandai dengan kotak. Cek: berapa yang sudah dimitigasi? Berapa yang masih fresh? Apakah harga bereaksi saat kembali ke OB?
 
 ---
 
