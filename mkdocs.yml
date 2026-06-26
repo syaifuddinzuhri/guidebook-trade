@@ -1,0 +1,103 @@
+site_name: Trading Guidebook
+site_description: Panduan lengkap strategi trading — SMC, ICT, SnR, Fundamental
+site_author: Trading Academy
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: material
+  language: id
+  palette:
+    - scheme: slate
+      primary: amber
+      accent: orange
+      toggle:
+        icon: material/weather-sunny
+        name: Light mode
+    - scheme: default
+      primary: amber
+      accent: orange
+      toggle:
+        icon: material/weather-night
+        name: Dark mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - toc.follow
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search:
+      lang: en
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Fondasi:
+    - Candlestick: foundations/Candlestick/README.md
+    - Market Structure: foundations/Market-Structure/README.md
+  - Strategi:
+    - SMC + ICT:
+      - Overview: strategies/SMC-ICT/README.md
+      - "🟢 LOW — Fondasi":
+        - "01. Fondasi Market": strategies/SMC-ICT/01-LOW/01-fondasi-market.md
+        - "02. Struktur Harga": strategies/SMC-ICT/01-LOW/02-struktur-harga.md
+        - "03. Candlestick": strategies/SMC-ICT/01-LOW/03-candlestick.md
+        - "04. Session & Waktu": strategies/SMC-ICT/01-LOW/04-session-waktu.md
+      - "🟡 MEDIUM — Konsep SMC":
+        - "05. BOS & CHOCH": strategies/SMC-ICT/02-MEDIUM/05-bos-choch.md
+        - "06. Order Block": strategies/SMC-ICT/02-MEDIUM/06-order-block.md
+        - "07. FVG & Imbalance": strategies/SMC-ICT/02-MEDIUM/07-fvg-imbalance.md
+        - "08. Liquidity": strategies/SMC-ICT/02-MEDIUM/08-liquidity.md
+      - "🔴 HIGH — Advanced ICT":
+        - "09. CISD": strategies/SMC-ICT/03-HIGH/09-cisd.md
+        - "10. Multi-Timeframe": strategies/SMC-ICT/03-HIGH/10-multi-timeframe.md
+        - "11. Entry Model": strategies/SMC-ICT/03-HIGH/11-entry-model.md
+        - "12. Risk Management": strategies/SMC-ICT/03-HIGH/12-risk-management.md
+      - "🏆 MASTER — Full System":
+        - "13. Full Strategy": strategies/SMC-ICT/04-MASTER/13-full-strategy.md
+        - "14. Backtesting": strategies/SMC-ICT/04-MASTER/14-backtesting.md
+        - "15. Trading Journal": strategies/SMC-ICT/04-MASTER/15-trading-journal.md
+    - SnR:
+      - Overview: strategies/SnR/README.md
+      - "🟢 LOW — Fondasi":
+        - "01. Apa itu SnR": strategies/SnR/01-LOW/01-apa-itu-snr.md
+        - "02. Cara Menggambar Level": strategies/SnR/01-LOW/02-cara-menggambar-level.md
+        - "03. Jenis-jenis SnR": strategies/SnR/01-LOW/03-jenis-jenis-snr.md
+      - "🟡 MEDIUM — Teknik":
+        - "04. Static vs Dynamic": strategies/SnR/02-MEDIUM/04-static-vs-dynamic.md
+        - "05. Zone vs Line": strategies/SnR/02-MEDIUM/05-zone-vs-line.md
+        - "06. Role Reversal": strategies/SnR/02-MEDIUM/06-role-reversal.md
+    - Fundamental:
+      - Overview: strategies/Fundamental/README.md
+      - "🟢 LOW — Dasar":
+        - "01. Apa itu Fundamental": strategies/Fundamental/01-LOW/01-apa-itu-fundamental.md
+        - "02. Data Ekonomi Penting": strategies/Fundamental/01-LOW/02-data-ekonomi-penting.md
+        - "03. Kalender Ekonomi": strategies/Fundamental/01-LOW/03-kalender-ekonomi.md
